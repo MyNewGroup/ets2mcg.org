@@ -1,32 +1,56 @@
 <html>
-    <head>
-        <title>ETS2MCG</title>
-    </head>
-    <body style="text-align: center;">
-        <h1>You will be redirected soon...</h1>
-        <h3>Click <a id="targetUrl">here</a> if it doesn't</h3>
-        <script>
-            const supportedLanguages = ["en_us", "ko_kr", "th_th"];
+
+<head>
+    <title>ETS2MCG</title>
+    <script src="common/js/jquery-3.5.1.min.js"></script>
+</head>
+
+<body style="text-align: center;">
+    <h1>You will be redirected soon...</h1>
+    <h3>Click <a id="targetUrl">here</a> if it doesn't</h3>
+    <script>
+        const langsPath = "https://common.ets2mcg.org/data/languages.json";
+
+        async function getList() {
+            return new Promise((resolve) => {
+                $.getJSON(langsPath, (data) => {
+                    return resolve(data);
+                });
+            })
+        }
+        async function redirect() {
+            let data = await getList();
+            const supportedLanguages = new Map();
+            for (let d of data) {
+                d.aliases.forEach((da) => {
+                    supportedLanguages.set(da, d.code);
+                    console.log(`${da} - ${d.code}`)
+                })
+            }
             let language = navigator.language;
             language = language.replace("-", "_").toLowerCase();
-            let selectedLanguage = supportedLanguages[0];
+            let selectedLanguage = data[0].code;
             let selectedLanguagePreference = 0;
-            supportedLanguages.forEach((value) => {
+            for (let value of supportedLanguages.keys()) {
                 let pref = 0;
-                if(value == language) {
+                if (value == language) {
                     pref = 2;
-                } else if(language.startsWith(value.substring(0, 2))) {
+                } else if (language.startsWith(value.substring(0, 2))) {
                     pref = 1;
                 }
-                if(pref > selectedLanguagePreference) {
-                    selectedLanguage = value;
+                if (pref > selectedLanguagePreference) {
+                    selectedLanguage = supportedLanguages.get(value);
                     selectedLanguagePreference = pref;
                 }
-            });
+            }
 
             let targetUrl = `${selectedLanguage}/index.html?autoRedirect=${selectedLanguage}`;
             location.href = targetUrl;
             document.getElementById("targetUrl").setAttribute("href", targetUrl);
-        </script>
-    </body>
+        }
+
+        redirect();
+    </script>
+</body>
+
 </html>
