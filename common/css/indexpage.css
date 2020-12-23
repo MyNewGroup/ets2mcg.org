@@ -59,6 +59,11 @@ div.pagecontent.sectionid2 {
     padding: 10px 0px;
 }
 
+#selectLanguages {
+    display: inline-block;
+    font-family: sans-serif;
+}
+
 .languageflagtitle {
     color: black;
     padding: 0;
