@@ -23,16 +23,21 @@
 
 <body>
 	<!-- TRANSLATORS SHOULD NEVER TRANSLATE SENTENCES WITHIN langWarning -->
-	<div id="langWarning" style="background-color: rgb(36, 36, 36); color: white; text-align: left; padding: 30px; display: none;">
-		<span style="color: inherit; font-size: 30px; display: block; margin: 10px;">This page has been translated into your preferred language</span>
-		<span style="color: inherit; font-size: 20px; display: block; margin: 10px;">If you find anything wrong, please take a look at the English page <a style="color: rgb(166, 255, 139); text-decoration: none;" href="../en_us/">here</a>.</span>
+	<div id="langWarning"
+		style="background-color: rgb(36, 36, 36); color: white; text-align: left; padding: 30px; display: none;">
+		<span style="color: inherit; font-size: 30px; display: block; margin: 10px;">This page has been translated into
+			your preferred language</span>
+		<span style="color: inherit; font-size: 20px; display: block; margin: 10px;">If you find anything wrong, please
+			take a look at the English page <a style="color: rgb(166, 255, 139); text-decoration: none;"
+				href="../en_us/">here</a>.</span>
 	</div>
 	<!-- HEADER -->
 	<div id="header" style="z-index: 50; width: 100%;">
 		<div class="menubarContainer">
 			<ul id="menubar">
 				<a href="index.html">
-					<li class="mcglogo current"><img src="https://common.ets2mcg.org/img/ETS2MCG.png"><span>ETS2MCG</span></li>
+					<li class="mcglogo current"><img
+							src="https://common.ets2mcg.org/img/ETS2MCG.png"><span>ETS2MCG</span></li>
 				</a>
 				<a href="privacy.html">
 					<li><span>นโยบายความเป็นส่วนตัว</span></li>
@@ -68,10 +73,8 @@
 	<div class="langChooser" style="width: 100%; overflow: hidden;">
 		<div style="display: block; margin: 0 auto; text-align: center;">
 			<span class="languageflagtitle" style="color: black;">Language</span>
-			<div style="display: inline-block; font-family: sans-serif;">
-				<a class="languageflagbutton" href="../en_us/index.html" title="English">🇬🇧</a>
-				<a class="languageflagbutton" href="../ko_kr/index.html" title="Korean">🇰🇷</a>
-				<a class="languageflagbutton" href="../th_th/index.html" title="Thai">🇹🇭</a>
+			<div id="selectLanguages">
+				<!--Languages will be added by script-->
 			</div>
 		</div>
 	</div>
@@ -201,10 +204,13 @@
 	</div>
 
 	<script>
+		// Constants
+		const langsPath = "https://common.ets2mcg.org/data/languages.json";
+
 		let params = new URLSearchParams(location.search);
-		if(params.has("autoRedirect")) {
+		if (params.has("autoRedirect")) {
 			let param = params.get("autoRedirect");
-			if(param === "en_us") {
+			if (param === "en_us") {
 				$("#langWarning").detach();
 			} else {
 				$("#langWarning").show();
@@ -303,19 +309,8 @@
 		}
 		keywordTick()
 
-		twemoji.parse($(".langChooser")[0], {
-			size: "svg",
-			ext: ".svg"
-		});
-		$(".langChooser").css("visibility", "visible");
-
-		$(".languageflagbutton").each((i, elem) => {
-			$(elem).addClass("languageflagbutton_loading");
-			$(elem).css("animation-delay", i * 150 + "ms");
-			setTimeout(() => {
-				$(elem).removeClass("languageflagbutton_loading")
-			}, i * 150 + 1000);
-		})
+		// Language Buttons
+		loadLanguages(); // Basehelper
 	</script>
 
 	<footer>
