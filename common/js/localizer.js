@@ -51,7 +51,7 @@ function initLocales() {
     locales[code][LOC_applyNow] = "ETS2MCG 팀에 지원하기";
 
     //////////////// Thai
-    // Version Latest
+    // Version 1
     initCode("th");
     code = "th";
 
