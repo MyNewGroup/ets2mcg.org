@@ -28,11 +28,10 @@ function getPageLanguage() {
 async function localize() {
     let locale = getPageLanguage();
     loadMenubar(locale);
-    await loadLanguages(locale);
     localizeTexts(locale);
 }
 
-async function loadLanguages(locale) {
+async function loadLanguages() {
     let data = await new Promise((resolve) => {
         $.getJSON(langsPath, (data) => {
             resolve(data);
@@ -60,8 +59,6 @@ async function loadLanguages(locale) {
             $(elem).removeClass("languageflagbutton_loading")
         }, i * 150 + 1000);
     })
-
-    $("#selectLanguages").parent().find(".languageflagtitle").text(locales[locale]["lang_select"])
 }
 
 /**
@@ -98,6 +95,8 @@ function loadMenubar(locale) {
 }
 
 function localizeTexts(locale) {
+    $("#selectLanguages").parent().find(".languageflagtitle").text(locales[locale]["lang_select"])
+
     let l = locales[locale];
     let ff = function () {
         return this.nodeType == 3;
