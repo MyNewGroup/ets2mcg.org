@@ -49,6 +49,22 @@ function initLocales() {
     // General
     locales[code][LOC_langSelect] = "언어";
     locales[code][LOC_applyNow] = "ETS2MCG 팀에 지원하기";
+
+    //////////////// Thai
+    // Version Latest
+    initCode("th");
+    code = "th";
+
+    // Menu bar
+    locales[code][LOC_menubars] = [
+        ["index.html", "ETS2MCG", /(index\.html|\/)$/],
+        ["privacy.html", "Privacy Policy", /(privacy\.html)$/],
+        ["rules.html", "VTC Rules", /(rules\.html)$/]
+    ];
+
+    // General
+    locales[code][LOC_langSelect] = "Language";
+    locales[code][LOC_applyNow] = "Apply to ETS2MCG Team";
 }
 
 initLocales();
