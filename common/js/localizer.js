@@ -58,13 +58,13 @@ function initLocales() {
     // Menu bar
     locales[code][LOC_menubars] = [
         ["index.html", "ETS2MCG", /(index\.html|\/)$/],
-        ["privacy.html", "Privacy Policy", /(privacy\.html)$/],
-        ["rules.html", "VTC Rules", /(rules\.html)$/]
+        ["privacy.html", "นโยบายความเป็นส่วนตัว", /(privacy\.html)$/],
+        ["rules.html", "กฎของทีม", /(rules\.html)$/]
     ];
 
     // General
-    locales[code][LOC_langSelect] = "Language";
-    locales[code][LOC_applyNow] = "Apply to ETS2MCG Team";
+    locales[code][LOC_langSelect] = "ภาษา";
+    locales[code][LOC_applyNow] = "สมัครเข้าทีม ETS2MCG";
 }
 
 initLocales();
