@@ -107,8 +107,6 @@ function localizeTexts(locale) {
         for (let key in l) {
             let key_ = "__" + key;
             if (txt.includes(key_)) {
-                console.log(txt);
-                console.log(key);
                 node.last()[0].textContent = l[key];
                 node.text(txt.replace(key_), l[key]);
             }
