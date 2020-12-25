@@ -1,3 +1,5 @@
+var locales = {};
+
 function loadSlideshowSlides() {
     return new Promise((resolve) => {
         var slideshowHome = "https://common.ets2mcg.org/img/slides/";
@@ -14,7 +16,23 @@ function loadSlideshowSlides() {
     })
 }
 
-async function loadLanguages() {
+function getPageLanguage() {
+    let params = new URLSearchParams(location.search);
+    if (params.has("locale")) return params.get("locale");
+    else {  
+        let segments = location.href.split("\/")
+        return segments[segments.length - 2]
+    }
+}
+
+async function localize() {
+    let locale = getPageLanguage();
+    loadMenubar(locale);
+    await loadLanguages(locale);
+    localizeTexts(locale);
+}
+
+async function loadLanguages(locale) {
     let data = await new Promise((resolve) => {
         $.getJSON(langsPath, (data) => {
             resolve(data);
@@ -29,8 +47,6 @@ async function loadLanguages() {
             .appendTo($("#selectLanguages"));
     }
 
-
-    console.log(data);
     twemoji.parse($(".langChooser")[0], {
         size: "svg",
         ext: ".svg"
@@ -43,5 +59,60 @@ async function loadLanguages() {
         setTimeout(() => {
             $(elem).removeClass("languageflagbutton_loading")
         }, i * 150 + 1000);
+    })
+
+    $("#selectLanguages").parent().find(".languageflagtitle").text(locales[locale]["lang_select"])
+}
+
+/**
+ * 
+ * @param {} menubarData [[url, name, urlLabel]]
+ */
+function loadMenubar(locale) {
+    let idx = 0;
+    let menubarData = locales[locale]["menubars"];
+
+    let d = $("#menubar").clone().empty();
+
+    for (let button of menubarData) {
+        let n = $("<a>");
+        n.attr("href", button[0]);
+
+        let li = $("<li>");
+        li.prepend($("<span>").text(button[1]));
+        if (idx == 0) {
+            li.addClass("mcglogo");
+            li.prepend($("<img src=\"https://common.ets2mcg.org/img/ETS2MCG.png\">"));
+        }
+        if ((location.pathname ?? "").match(button[2])) {
+            li.addClass("current");
+        }
+
+        li.prependTo(n);
+        n.appendTo(d);
+
+        idx++;
+    }
+
+    $("#menubar").replaceWith(d);
+}
+
+function localizeTexts(locale) {
+    let l = locales[locale];
+    let ff = function () {
+        return this.nodeType == 3;
+    };
+    $("*").each((_, n) => {
+        let node = $(n).contents().filter(ff);
+        let txt = node.text();
+        for (let key in l) {
+            let key_ = "__" + key;
+            if (txt.includes(key_)) {
+                console.log(txt);
+                console.log(key);
+                node.last()[0].textContent = l[key];
+                node.text(txt.replace(key_), l[key]);
+            }
+        }
     })
 }
