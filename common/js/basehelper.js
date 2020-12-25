@@ -19,7 +19,7 @@ function loadSlideshowSlides() {
 function getPageLanguage() {
     let params = new URLSearchParams(location.search);
     if (params.has("locale")) return params.get("locale");
-    else {  
+    else {
         let segments = location.href.split("\/")
         return segments[segments.length - 2]
     }
@@ -95,8 +95,20 @@ function loadMenubar(locale) {
 }
 
 function localizeTexts(locale) {
+    // Language Selector
     $("#selectLanguages").parent().find(".languageflagtitle").text(locales[locale]["lang_select"])
 
+    // Text Slides
+    function textSlides() {
+        let p = $("#keyword").first().parent();
+        $(".keyword-item").detach();
+        for (let slide of locales[locale][LOC_textSlideshows]) {
+            p.append($("<div>").addClass("keyword-item").attr("delay", slide[1]).text(slide[0]));
+        }
+    }
+    if (locales[locale][LOC_version] >= 2) textSlides();
+
+    // Replace key values
     let l = locales[locale];
     let ff = function () {
         return this.nodeType == 3;
