@@ -79,18 +79,28 @@ function initLocales() {
     //////////////// Thai
     code = "th";
     initCode(code);
-    locales[code][LOC_version] = 1;
+    locales[code][LOC_version] = 2;
 
     // Menu bar
     locales[code][LOC_menubars] = [
         ["index.html", "ETS2MCG", /(index\.html|\/)$/],
-        ["privacy.html", "Privacy Policy", /(privacy\.html)$/],
-        ["rules.html", "VTC Rules", /(rules\.html)$/]
+        ["privacy.html", "นโยบายความเป็นส่วนตัว", /(privacy\.html)$/],
+        ["rules.html", "กฎของทีม", /(rules\.html)$/]
+    ];
+
+    // Text Slideshows
+    locales[code][LOC_textSlideshows] = [
+        ["เราคือครอบครัว", 2000],
+        ["เรายินดีต้อนรับคุณ", 2000],
+        ["เราคือทีมที่มีแต่ความสุข", 2000],
+        ["เราคือ ETS2MCG", 1000],
+        ["เราคือครอบครัว", 3000]
     ];
 
     // General
-    locales[code][LOC_langSelect] = "Language";
-    locales[code][LOC_applyNow] = "Apply to ETS2MCG Team";
+    locales[code][LOC_langSelect] = "ภาษา";
+    locales[code][LOC_applyNow] = "สมัครเข้าทีม ETS2MCG";
+    locales[code][LOC_textInfo1] = "ที่ที่เรามารวมตัวกัน";
 }
 
 initLocales();
